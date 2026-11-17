@@ -36,3 +36,6 @@ if __name__ == "__main__":
     messages.append({"role": "assistant", "content": answer})
     messages.append({"role": "user", "content": "Now give one risk of using Kafka."})
     print(chat(messages))
+
+for i in range(3):
+    print(chat([{"role": "user", "content": "Give me a name for a banking app."}], temperature=1.0))

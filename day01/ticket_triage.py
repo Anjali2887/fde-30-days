@@ -12,7 +12,7 @@ OLLAMA_URL = "http://localhost:11434/api/chat"
 
 
 class Triage(BaseModel):
-    category: Literal["card", "payments", "login", "fraud", "other"]
+    category: Literal["card", "payments", "login", "fraud", "other", "account"]
     priority: Literal["low", "medium", "high"]
     summary: str
 
@@ -20,6 +20,8 @@ class Triage(BaseModel):
 SYSTEM = (
     "You triage customer support tickets for a retail bank. "
     "Fraud or money already lost is always high priority. Reply only with JSON."
+    "For answering any process related ticket refer process documents."
+    "New password setting is allowed only if password gets expired."
 )
 
 
@@ -49,6 +51,12 @@ if __name__ == "__main__":
         "I can't log in since this morning, it says my password expired.",
         "There are two payments of Rs 18,000 I never made on my card!",
         "How do I change the address on my account?",
+        "My account is not showing correct balance",
+        "I am not able to setup UPI payment for my bank account",
+        "I need to change my account password but not able to proceed",
+        "I need to attach a nominee with my account",
+        "Need new chequebook",
+        ""
     ]
     for t in tickets:
         try:
