@@ -27,6 +27,8 @@ def ask(system: str, user: str) -> str:
     return data["message"]["content"]
 
 
+SYSTEM = """ You are a helpful assistant... """
+
 # Weak prompt: no role, no format, no audience
 WEAK = ("", f"Summarise this: {INCIDENT}")
 
@@ -38,8 +40,40 @@ STRONG = (
     f"Incident:\n{INCIDENT}",
 )
 
+strong_prompt_3 = """
+    You are a banking customer-support assistant.
+
+    Task:
+    Explain to the customer why their NEFT transaction may have failed
+    and what they should do next.
+
+    Context:
+    Use only the banking policy provided below.
+    Do not assume or invent any failure reasons.
+    If the policy does not mention the failure reason, clearly tell
+    the customer that the available policy does not specify it.
+
+    Banking Policy:
+    <Banking Policy>
+    NEFT transactions will be processed in 4 hours of duration.
+    </Banking Policy>
+
+    Format:
+    - Respond in exactly 3 bullet points.
+    - Use simple, customer-friendly language.
+    - Explain only what is supported by the policy.
+    - Do not promise any refund or resolution timeline.
+    - Do not assume that a transaction is failed just because it
+      has not completed within 4 hours.
+    - Do not recommend any action that is not mentioned in the
+      supplied banking policy.
+    """
+
+
 if __name__ == "__main__":
     print("=== WEAK PROMPT ===")
     print(ask(*WEAK))
     print("\n=== STRONG PROMPT ===")
     print(ask(*STRONG))
+    print("\n=== STRONG NEFT FAILURE PROMPT ===")
+    print(ask(SYSTEM, strong_prompt_3))
